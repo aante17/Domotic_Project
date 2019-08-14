@@ -38,7 +38,7 @@ public class Sala extends AppCompatActivity {
 
         String resultadoConsultaVentilador = new Ingreso().lectura_ingreso(12);
 
-        if (Integer.parseInt(resultadoConsultaVentilador) == 0) {
+        if (Integer.parseInt(resultadoConsultaVentilador) == 0) { 
             swtVentilador.setChecked(false);
             txtVentilador.setText("Desactivado");
             Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
