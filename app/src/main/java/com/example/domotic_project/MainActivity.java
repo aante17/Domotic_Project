@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    public void ingrear(View v) {
+    public void ingresar(View v) {
         Intent i = new Intent(this, Estaciones.class );
         startActivity(i);
 
