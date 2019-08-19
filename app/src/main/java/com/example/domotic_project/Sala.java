@@ -60,21 +60,15 @@ public class Sala extends AppCompatActivity {
 
 
     public void onclicVentilador(View view){
-        progressBarCircular = (ProgressBar)findViewById(R.id.progressBar2);
-        progressBarCircular.setVisibility(View.VISIBLE);
         if (view.getId() == R.id.switch_Ventilador1){
             if (swtVentilador.isChecked()){
                 txtVentilador.setText("Activado");
                 Cambio_base cambio=new Cambio_base(12,1);
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
-                progressBarCircular.setVisibility(View.INVISIBLE);
-
             }else{
                 txtVentilador.setText("Desactivado");
                 Cambio_base cambio=new Cambio_base(12,0);
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
-                progressBarCircular.setVisibility(View.INVISIBLE);
-
             }
         }
     }
