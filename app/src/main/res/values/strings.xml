@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Domotic_Project</string>
+    <string name="not_log_in">No se puede iniciar sesion</string>
+    <string name="name_project">HOUSE-TIC</string>
 </resources>
