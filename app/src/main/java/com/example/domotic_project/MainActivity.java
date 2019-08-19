@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Glide.with(this).load(account.getPhotoUrl())
                     .crossFade()
                     .centerCrop()
-                    .placeholder(R.drawable.common_google_signin_btn_text_dark_normal)
+                    .placeholder(R.drawable.chihuahua)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .thumbnail(0.5f)
                     .into(photoImageView);
