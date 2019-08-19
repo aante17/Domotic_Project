@@ -44,7 +44,7 @@ public class Estaciones extends AppCompatActivity {
 
     }
     public void salir(View v) {
-        Intent i = new Intent(this, MainActivity.class );
+        Intent i = new Intent(this, LoginActivity.class );
         startActivity(i);
     }
 
