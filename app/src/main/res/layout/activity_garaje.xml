@@ -45,30 +45,28 @@
 
     <TextView
         android:id="@+id/textView_Luces3"
-        android:layout_width="101dp"
-        android:layout_height="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView_Puerta3"
-        android:layout_width="103dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_" />
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="192dp" />
 
     <Switch
         android:id="@+id/switch_Luces3"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="104dp"
         android:onClick="onclicLuces"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -77,8 +75,8 @@
         android:id="@+id/switch_Puerta3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="113dp"
         android:onClick="onclicPuerta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_Luces3" />

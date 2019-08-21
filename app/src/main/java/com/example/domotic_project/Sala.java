@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ public class Sala extends AppCompatActivity {
     Switch swtLuces;
     TextView txtVentilador;
     Switch swtVentilador;
-    ProgressBar progressBarCircular;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +72,6 @@ public class Sala extends AppCompatActivity {
     }
 
     public void onclicLuces(View view){
-
         if (view.getId() == R.id.switch_Luces1){
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
