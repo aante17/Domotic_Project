@@ -12,7 +12,7 @@
         android:layout_width="80dp"
         android:layout_height="28dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="Luces"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
 
     <TextView
         android:id="@+id/textView_Ventilador5"
-        android:layout_width="63dp"
-        android:layout_height="17dp"
+        android:layout_width="118dp"
+        android:layout_height="22dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="TextView"
@@ -31,8 +31,8 @@
 
     <TextView
         android:id="@+id/textView_Luces5"
-        android:layout_width="63dp"
-        android:layout_height="17dp"
+        android:layout_width="93dp"
+        android:layout_height="19dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="TextView"
@@ -45,7 +45,7 @@
         android:layout_width="128dp"
         android:layout_height="27dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:text="Ventilador"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,27 +55,28 @@
         android:id="@+id/switch_Luces5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="290dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
         android:onClick="onclicLuces"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switch_Ventilador5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="290dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="60dp"
         android:onClick="onclicVentilador"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_Luces5" />
+
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="500dp"
         android:layout_marginEnd="8dp"
         android:onClick="estaciones"
         android:text="Estaciones"
@@ -83,5 +84,30 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="156dp"
+        android:layout_height="143dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/dinner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewmic5"
+        android:layout_width="76dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="getInputSpeech"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/ic_mic_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

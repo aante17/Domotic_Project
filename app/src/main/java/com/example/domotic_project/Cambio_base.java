@@ -5,50 +5,25 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.concurrent.ExecutionException;
 
 public class Cambio_base {
 
-    private String serverIP = "remotemysql.com";
-    private String port = "3306";
-    private String userMySQL = "OoQlolIILm";
-    private String pwdMySQL = "Z5JzvRroWj";
-    private String database = "OoQlolIILm";
-    private String[] datosConexion = null;
+
+    static DatabaseReference housetic;
+
+    public Cambio_base() {
+
+    }
 
 
-    public Cambio_base(Integer dispositivo,Integer num) {
-
-                {
-                    String[] resultadoSQL = null;
-                    datosConexion = new String[]{
-                            serverIP,
-                            port,
-                            database,
-                            userMySQL,
-                            pwdMySQL,
-                            "UPDATE `Dispositivo` SET `State` = '"+num+"' WHERE `Dispositivo`.`idDispositivo` = "+dispositivo+";",
-                    };
-                    String driver = "com.mysql.jdbc.Driver";
-                    try {
-                        Class.forName(driver).newInstance();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        resultadoSQL = new AsyncQueryUpdate().execute(datosConexion).get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
+    public static void FireCambioBase(String cuarto,String dispositvo,String estado){
+        //Cambio_base.ambio_baseC();º
+        housetic = FirebaseDatabase.getInstance().getReference();
+        housetic.child(cuarto).child(dispositvo).setValue(estado);
     }
 }
 

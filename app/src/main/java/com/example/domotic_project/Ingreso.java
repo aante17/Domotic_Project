@@ -1,51 +1,47 @@
 package com.example.domotic_project;
 
-import java.util.concurrent.ExecutionException;
+import android.content.Context;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Ingreso {
-    private String serverIP = "remotemysql.com";
-    private String port = "3306";
-    private String userMySQL = "OoQlolIILm";
-    private String pwdMySQL = "Z5JzvRroWj";
-    private String database = "OoQlolIILm";
-    private String[] datosConexion = null;
 
-    public String lectura_ingreso(Integer dispositvo) {
-        String[] resultadoSQL = null;
-        {
+    private DatabaseReference housetic;
 
 
-            datosConexion = new String[]{
-                    serverIP,
-                    port,
-                    database,
-                    userMySQL,
-                    pwdMySQL,
-                    "",
-            };
-            String driver = "com.mysql.jdbc.Driver";
-            try {
-                Class.forName(driver).newInstance();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+    public void lectura_ingreso(final String cuarto, final String dispositivo, final TextView txt, final Switch swt) {
+
+        housetic = FirebaseDatabase.getInstance().getReference();
+        housetic.child(cuarto);
+        housetic.addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String resultadoConsulta = dataSnapshot.child(dispositivo).getValue().toString();
+                    if (resultadoConsulta.equalsIgnoreCase("OFF")) {
+                        swt.setChecked(false);
+                        txt.setText("Desactivado");
+                    } else {
+                        swt.setChecked(true);
+                        txt.setText("Activado");
+                    }
+                }
             }
-            try {
-                datosConexion[5] = "SELECT * FROM Dispositivo where idDispositivo=" + dispositvo + ";";
-                resultadoSQL = new AsyncQuery().execute(datosConexion).get();
 
-
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-        }
-        String resultadoConsulta = resultadoSQL[0].split(",")[3];
-        return resultadoConsulta;
+        });
     }
 
 }

@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView_Alarma4"
-        android:layout_width="63dp"
-        android:layout_height="17dp"
+        android:layout_width="98dp"
+        android:layout_height="25dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="TextView"
@@ -23,7 +23,7 @@
         android:layout_width="67dp"
         android:layout_height="29dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="Luces"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="127dp"
         android:layout_height="34dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:text="Alarma"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="500dp"
         android:layout_marginEnd="8dp"
         android:onClick="estaciones"
         android:text="Estaciones"
@@ -68,20 +68,43 @@
         android:id="@+id/switch_Alarma4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="60dp"
         android:onClick="onclicAlarma"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_Luces4" />
 
     <Switch
         android:id="@+id/switch_Luces4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
         android:onClick="onclicLuces"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="156dp"
+        android:layout_height="143dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/plant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageViewmic4"
+        android:layout_width="76dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="getInputSpeech"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/ic_mic_black_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
