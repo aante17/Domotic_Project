@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HOUSE-TIC</string>
+    <string name="not_log_in">No se puede iniciar sesion</string>
+    <string name="name_project">HOUSE-TIC</string>
+    <string name="welcome">BIENVENIDO A HOUSE TIC</string>
+    <string name="not_close_sesion">No se pudo cerrar sesion</string>
+</resources>
