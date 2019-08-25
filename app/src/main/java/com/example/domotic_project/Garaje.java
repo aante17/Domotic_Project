@@ -21,6 +21,7 @@ package com.example.domotic_project;
         import java.util.Locale;
 
 public class Garaje extends AppCompatActivity {
+    //Inicializacion de variables TextView, Switch, DatabaseRefence, Cambio_base, TTSManager
     TextView txtLuces;
     Switch swtLuces;
     TextView txtPuerta;
@@ -34,18 +35,18 @@ public class Garaje extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garaje);
 
-        txtLuces = (TextView) findViewById(R.id.textView_Luces3);
+        txtLuces = (TextView) findViewById(R.id.textView_Luces3); //llamado del TextView del activity
         txtPuerta = (TextView) findViewById(R.id.textView_Puerta3);
-        swtPuerta = (Switch) findViewById(R.id.switch_Puerta3);
+        swtPuerta = (Switch) findViewById(R.id.switch_Puerta3); //llamado del switch del activity
         swtLuces = (Switch) findViewById(R.id.switch_Luces3);
-        ttsManager=new TTSManager();
+        ttsManager=new TTSManager(); //creacion del objeto que ejecutara la voz de la aplicacion
         ttsManager.init(this);
 
-        String cuarto = "garage";
+        String cuarto = "garage"; //variables que se utilizara para ejecutar en la base de datos
         final String dispositivo1 = "luces";
         final String dispositivo2 = "puertas";
-        housetic = FirebaseDatabase.getInstance().getReference();
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic = FirebaseDatabase.getInstance().getReference(); //ingreso a la base de datos
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {  //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,7 +69,7 @@ public class Garaje extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,24 +91,24 @@ public class Garaje extends AppCompatActivity {
             }
         });
     }
-    public void estaciones(View v) {
+    public void estaciones(View v) { //implementacion de funcion estaciones, redirrecionamiento del cuarto a estaciones
         Intent i = new Intent(this, Estaciones.class );
         startActivity(i);
 
     }
-    public void onclicPuerta(View view){
+    public void onclicPuerta(View view){ //implementacion de funcion onClic para las puertas
 
         if (view.getId() == R.id.switch_Puerta3){
             if (swtPuerta.isChecked()){
                 txtPuerta.setText("Activado");
 
-                fire.FireCambioBase("garage","puertas","ON");
+                fire.FireCambioBase("garage","puertas","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
                 ttsManager.initQueue("Puertas abiertas");
                 Toast.makeText(Garaje.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtPuerta.setText("Desactivado");
 
-                fire.FireCambioBase("garage","puertas","OFF");
+                fire.FireCambioBase("garage","puertas","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
                 ttsManager.initQueue("Puertas cerradas");
                 Toast.makeText(Garaje.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
@@ -120,14 +121,14 @@ public class Garaje extends AppCompatActivity {
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
 
-                fire.FireCambioBase("garage","luces","ON");
-                ttsManager.initQueue("Luces encendidas");
+                fire.FireCambioBase("garage","luces","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Garaje.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtLuces.setText("Desactivado");
 
-                fire.FireCambioBase("garage","luces","OFF");
-                ttsManager.initQueue("Luces apagadas");
+                fire.FireCambioBase("garage","luces","OFF"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Garaje.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
         }
@@ -157,20 +158,20 @@ public class Garaje extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String comando = result.get(0);
                     if(comando.equalsIgnoreCase("Encender luces")){
-                        fire.FireCambioBase("garage","luces","ON");
-                        ttsManager.initQueue("Luces encendidas");
+                        fire.FireCambioBase("garage","luces","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces encendidas");
                     } else if( comando.equalsIgnoreCase("Apagar luces")){
-                        fire.FireCambioBase("garage","luces","OFF");
-                        ttsManager.initQueue("Luces apagadas");
+                        fire.FireCambioBase("garage","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces apagadas");
                     }else if(comando.equalsIgnoreCase("Abrir puertas")){
-                        fire.FireCambioBase("garage","puertas","ON");
-                        ttsManager.initQueue("Puertas abiertas");
+                        fire.FireCambioBase("garage","puertas","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Puertas abiertas"); //Ejecucion de voz del cambio de estado
                         mensaje("Puertas abiertas");
                     } else if( comando.equalsIgnoreCase("Cerrar puertas")){
-                        fire.FireCambioBase("garage","puertas","OFF");
-                        ttsManager.initQueue("Puertas cerradas");
+                        fire.FireCambioBase("garage","puertas","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Puertas cerradas"); //Ejecucion de voz del cambio de estado
                         mensaje("Puertas cerradas");
                     }
                 }

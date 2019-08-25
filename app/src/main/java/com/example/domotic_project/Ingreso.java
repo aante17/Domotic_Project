@@ -15,17 +15,17 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Ingreso {
 
-    private DatabaseReference housetic;
+    private DatabaseReference housetic;//inicializacion de DatabaseRefenrence
 
 
-    public void lectura_ingreso(final String cuarto, final String dispositivo, final TextView txt, final Switch swt) {
+    public void lectura_ingreso(final String cuarto, final String dispositivo, final TextView txt, final Switch swt) {//ingreso de funcion que hara lectura de base de datos
 
-        housetic = FirebaseDatabase.getInstance().getReference();
+        housetic = FirebaseDatabase.getInstance().getReference(); //ingreso a base de datos
         housetic.child(cuarto);
         housetic.addValueEventListener(new ValueEventListener() {
             @Override
 
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {//buscar a traves del padre e hijo el estado del dispositivo
                 if (dataSnapshot.exists()) {
                     String resultadoConsulta = dataSnapshot.child(dispositivo).getValue().toString();
                     if (resultadoConsulta.equalsIgnoreCase("OFF")) {

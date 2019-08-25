@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Jardin extends AppCompatActivity {
+    //Inicializacion de variables TextView, Switch, DatabaseRefence, Cambio_base, TTSManager
     TextView txtLuces;
     Switch swtLuces;
     TextView txtAlarma;
@@ -33,18 +34,18 @@ public class Jardin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jardin);
-        txtLuces = (TextView) findViewById(R.id.textView_Luces4);
+        txtLuces = (TextView) findViewById(R.id.textView_Luces4); //llamado del TextView del activity
         txtAlarma = (TextView) findViewById(R.id.textView_Alarma4);
-        swtAlarma= (Switch) findViewById(R.id.switch_Alarma4);
+        swtAlarma= (Switch) findViewById(R.id.switch_Alarma4); //llamado del switch del activity
         swtLuces = (Switch) findViewById(R.id.switch_Luces4);
-        ttsManager=new TTSManager();
+        ttsManager=new TTSManager(); //creacion del objeto que ejecutara la voz de la aplicacion
         ttsManager.init(this);
 
-        String cuarto = "jardin";
+        String cuarto = "jardin"; //variables que se utilizara para ejecutar en la base de datos
         final String dispositivo1 = "luces";
         final String dispositivo2 = "alarma";
-        housetic = FirebaseDatabase.getInstance().getReference();
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic = FirebaseDatabase.getInstance().getReference();//ingreso a la base de datos
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {  //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,7 +68,7 @@ public class Jardin extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,24 +92,24 @@ public class Jardin extends AppCompatActivity {
             }
         });
     }
-    public void estaciones(View v) {
+    public void estaciones(View v) { //implementacion de funcion estaciones, redirrecionamiento del cuarto a estaciones
         Intent i = new Intent(this, Estaciones.class );
         startActivity(i);
 
     }
-    public void onclicAlarma(View view){
+    public void onclicAlarma(View view){ //implementacion de funcion onClic para la alarma
 
         if (view.getId() == R.id.switch_Alarma4){
             if (swtAlarma.isChecked()){
                 txtAlarma.setText("Activado");
 
-                fire.FireCambioBase("jardin","alarma","ON");
-                ttsManager.initQueue("Alarma activada");
+                fire.FireCambioBase("jardin","alarma","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Alarma activada");//Ejecucion de voz del cambio de estado
                 Toast.makeText(Jardin.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtAlarma.setText("Desactivado");
-                ttsManager.initQueue("Alarma desactivada");
-                fire.FireCambioBase("jardin","alarma","OFF");
+                ttsManager.initQueue("Alarma desactivada");//Ejecucion de voz del cambio de estado
+                fire.FireCambioBase("jardin","alarma","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
                 Toast.makeText(Jardin.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
         }
@@ -120,14 +121,14 @@ public class Jardin extends AppCompatActivity {
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
 
-                fire.FireCambioBase("jardin","luces","ON");
-                ttsManager.initQueue("Luces encendidas");
+                fire.FireCambioBase("jardin","luces","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Jardin.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtLuces.setText("Desactivado");
 
-                fire.FireCambioBase("jardin","luces","OFF");
-                ttsManager.initQueue("Luces apagadas");
+                fire.FireCambioBase("jardin","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Luces apagadas");//Ejecucion de voz del cambio de estado
                 Toast.makeText(Jardin.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
         }
@@ -157,21 +158,21 @@ public class Jardin extends AppCompatActivity {
                 if(resultCode == RESULT_OK && data != null){
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String comando = result.get(0);
-                    if(comando.equalsIgnoreCase("Encender luces")){
-                        fire.FireCambioBase("jardin","luces","ON");
-                        ttsManager.initQueue("Luces encendidas");
+                    if(comando.equalsIgnoreCase("Encender luces")){//Ejecucion de voz del cambio de estado
+                        fire.FireCambioBase("jardin","luces","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Luces encendidas");// validacion de comando de voz
                         mensaje("Luces encendidas");
-                    } else if( comando.equalsIgnoreCase("Apagar luces")){
-                        fire.FireCambioBase("jardin","luces","OFF");
-                        ttsManager.initQueue("Luces apagadas");
+                    } else if( comando.equalsIgnoreCase("Apagar luces")){//Ejecucion de voz del cambio de estado
+                        fire.FireCambioBase("jardin","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Luces apagadas");// validacion de comando de voz
                         mensaje("Luces apagadas");
-                    }else if(comando.equalsIgnoreCase("Activar alarma")){
-                        fire.FireCambioBase("jardin","alarma","ON");
-                        ttsManager.initQueue("Alarma activada");
+                    }else if(comando.equalsIgnoreCase("Activar alarma")){//Ejecucion de voz del cambio de estado
+                        fire.FireCambioBase("jardin","alarma","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Alarma activada");// validacion de comando de voz
                         mensaje("Alarma activada");
-                    } else if( comando.equalsIgnoreCase("Desactivar alarma")){
-                        fire.FireCambioBase("jardin","alarma","OFF");
-                        ttsManager.initQueue("Alarma desactivada");
+                    } else if( comando.equalsIgnoreCase("Desactivar alarma")){//Ejecucion de voz del cambio de estado
+                        fire.FireCambioBase("jardin","alarma","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Alarma desactivada");// validacion de comando de voz
                         mensaje("Alarma desactivada");
                     }
                 }
