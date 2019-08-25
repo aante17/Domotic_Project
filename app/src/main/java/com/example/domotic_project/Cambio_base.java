@@ -20,8 +20,8 @@ public class Cambio_base {
     }
 
 
-    public static void FireCambioBase(String cuarto,String dispositvo,String estado){
-        //Cambio_base.ambio_baseC();º
+    public static void FireCambioBase(String cuarto,String dispositvo,String estado){//realizar cambio de estado en la base de datos
+
         housetic = FirebaseDatabase.getInstance().getReference();
         housetic.child(cuarto).child(dispositvo).setValue(estado);
     }

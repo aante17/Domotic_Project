@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Comedor extends AppCompatActivity {
+    //Inicializacion de variables TextView, Switch, DatabaseRefence, Cambio_base, TTSManager
     TextView txtLuces;
     Switch swtLuces;
     TextView txtVentilador;
@@ -32,18 +33,18 @@ public class Comedor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comedor);
-        txtLuces = (TextView) findViewById(R.id.textView_Luces5);
+        txtLuces = (TextView) findViewById(R.id.textView_Luces5); //llamado del TextView del activity
         txtVentilador = (TextView) findViewById(R.id.textView_Ventilador5);
-        swtVentilador= (Switch) findViewById(R.id.switch_Ventilador5);
+        swtVentilador= (Switch) findViewById(R.id.switch_Ventilador5); //llamado del switch del activity
         swtLuces = (Switch) findViewById(R.id.switch_Luces5);
-        ttsManager=new TTSManager();
+        ttsManager=new TTSManager(); //creacion del objeto que ejecutara la voz de la aplicacion
         ttsManager.init(this);
 
-        final String cuarto = "comedor";
+        final String cuarto = "comedor"; //variables que se utilizara para ejecutar en la base de datos
         final String dispositivo1 = "luces";
         final String dispositivo2 = "ventilador";
-        housetic = FirebaseDatabase.getInstance().getReference();
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic = FirebaseDatabase.getInstance().getReference(); //ingreso a la base de datos
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {  //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -64,7 +65,7 @@ public class Comedor extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,26 +91,26 @@ public class Comedor extends AppCompatActivity {
 
 
     }
-    public void estaciones(View v) {
+    public void estaciones(View v) { //implementacion de funcion estaciones, redirrecionamiento del cuarto a estaciones
         Intent i = new Intent(this, Estaciones.class );
         startActivity(i);
 
     }
 
-    public void onclicVentilador(View view){
+    public void onclicVentilador(View view){ //implementacion de funcion onClic para el ventilador
 
         if (view.getId() == R.id.switch_Ventilador5){
             if (swtVentilador.isChecked()){
                 txtVentilador.setText("Activado");
 
-                fire.FireCambioBase("comedor","ventilador","ON");
+                fire.FireCambioBase("comedor","ventilador","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
                 ttsManager.initQueue("Ventilador encendido");
 
                 Toast.makeText(Comedor.this,"Ventilador encendido", Toast.LENGTH_LONG).show();
             }else{
                 txtVentilador.setText("Desactivado");
 
-                fire.FireCambioBase("comedor","ventilador","OFF");
+                fire.FireCambioBase("comedor","ventilador","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
                 ttsManager.initQueue("Ventilador apagado");
                 Toast.makeText(Comedor.this,"Ventilador apagado", Toast.LENGTH_LONG).show();
             }
@@ -122,14 +123,14 @@ public class Comedor extends AppCompatActivity {
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
 
-                fire.FireCambioBase("comedor","luces","ON");
-                ttsManager.initQueue("Luces encendidas");
+                fire.FireCambioBase("comedor","luces","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Comedor.this,"Luces encendidas", Toast.LENGTH_LONG).show();
             }else{
                 txtLuces.setText("Desactivado");
 
-                fire.FireCambioBase("comedor","luces","OFF");
-                ttsManager.initQueue("Luces apagadas");
+                fire.FireCambioBase("comedor","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Comedor.this,"Luces apagadas", Toast.LENGTH_LONG).show();
             }
         }
@@ -160,21 +161,21 @@ public class Comedor extends AppCompatActivity {
                 if(resultCode == RESULT_OK && data != null){
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String comando = result.get(0);
-                    if(comando.equalsIgnoreCase("Encender luces")){
-                        fire.FireCambioBase("comedor","luces","ON");
-                        ttsManager.initQueue("Luces encendidas");
+                    if(comando.equalsIgnoreCase("Encender luces")){// validacion de comando de voz
+                        fire.FireCambioBase("comedor","luces","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces encendidas");
-                    } else if( comando.equalsIgnoreCase("Apagar luces")){
-                        fire.FireCambioBase("comedor","luces","OFF");
-                        ttsManager.initQueue("Luces apagadas");
+                    } else if( comando.equalsIgnoreCase("Apagar luces")){// validacion de comando de voz
+                        fire.FireCambioBase("comedor","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces apagadas");
-                    }else if(comando.equalsIgnoreCase("Encender ventilador")){
-                        fire.FireCambioBase("comedor","ventilador","ON");
-                        ttsManager.initQueue("Ventilador encendido");
+                    }else if(comando.equalsIgnoreCase("Encender ventilador")){// validacion de comando de voz
+                        fire.FireCambioBase("comedor","ventilador","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Ventilador encendido"); //Ejecucion de voz del cambio de estado
                         mensaje("Ventilador encendido");
-                    } else if( comando.equalsIgnoreCase("Apagar ventilador")){
-                        fire.FireCambioBase("comedor","ventilador","OFF");
-                        ttsManager.initQueue("Ventilador apagado");
+                    } else if( comando.equalsIgnoreCase("Apagar ventilador")){// validacion de comando de voz
+                        fire.FireCambioBase("comedor","ventilador","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Ventilador apagado"); //Ejecucion de voz del cambio de estado
                         mensaje("Ventilador apagado");
                     }
                 }

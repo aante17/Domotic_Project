@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Sala extends AppCompatActivity {
+    //Inicializacion de variables TextView, Switch, DatabaseRefence, Cambio_base, TTSManager
     TextView txtLuces;
     Switch swtLuces;
     TextView txtVentilador;
@@ -33,16 +34,16 @@ public class Sala extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala);
-        ttsManager=new TTSManager();
+        ttsManager=new TTSManager(); //creacion del objeto que ejecutara la voz de la aplicacion
         ttsManager.init(this);
-        txtLuces = (TextView) findViewById(R.id.textView_Luces1);
+        txtLuces = (TextView) findViewById(R.id.textView_Luces1); //llamado del TextView del activity
         txtVentilador = (TextView) findViewById(R.id.textView_Ventilador1);
-        swtVentilador= (Switch) findViewById(R.id.switch_Ventilador1);
+        swtVentilador= (Switch) findViewById(R.id.switch_Ventilador1); //llamado del switch del activity
         swtLuces = (Switch) findViewById(R.id.switch_Luces1);
 
 
-        housetic = FirebaseDatabase.getInstance().getReference();
-        housetic.child("sala").addValueEventListener(new ValueEventListener() {
+        housetic = FirebaseDatabase.getInstance().getReference(); //ingreso a la base de datos
+        housetic.child("sala").addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,7 +64,7 @@ public class Sala extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        housetic.child("sala").addValueEventListener(new ValueEventListener() {
+        housetic.child("sala").addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -87,25 +88,25 @@ public class Sala extends AppCompatActivity {
 
     }
 
-    public void estaciones(View v) {
+    public void estaciones(View v) { //implementacion de funcion estaciones, redirrecionamiento del cuarto a estaciones
         Intent i = new Intent(this, Estaciones.class);
         startActivity(i);
 
     }
 
 
-    public void onclicVentilador(View view){
+    public void onclicVentilador(View view){ //implementacion de funcion onClic para el ventilador
 
         if (view.getId() == R.id.switch_Ventilador1){
             if (swtVentilador.isChecked()){
                 txtVentilador.setText("Activado");
-                fire.FireCambioBase("sala","ventilador","ON");
-                ttsManager.initQueue("Ventilador activado");
+                fire.FireCambioBase("sala","ventilador","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Ventilador activado"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtVentilador.setText("Desactivado");
-                fire.FireCambioBase("sala","ventilador","OFF");
-                ttsManager.initQueue("Ventilador desactivado");
+                fire.FireCambioBase("sala","ventilador","OFF"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Ventilador desactivado"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
         }
@@ -116,13 +117,13 @@ public class Sala extends AppCompatActivity {
         if (view.getId() == R.id.switch_Luces1){
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
-                fire.FireCambioBase("sala","luces","ON");
-                ttsManager.initQueue("Luces activadas");
+                fire.FireCambioBase("sala","luces","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Luces activadas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }else{
                 txtLuces.setText("Desactivado");
-                fire.FireCambioBase("sala","luces","OFF");
-                ttsManager.initQueue("Luces desactivadas");
+                fire.FireCambioBase("sala","luces","OFF"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Luces desactivadas"); //Ejecucion de voz del cambio de estado
                 Toast.makeText(Sala.this,"Conexión Establecida", Toast.LENGTH_LONG).show();
             }
         }
@@ -153,20 +154,20 @@ public class Sala extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String comando = result.get(0);
                     if(comando.equalsIgnoreCase("Encender luces")){
-                        fire.FireCambioBase("sala","luces","ON");
-                        ttsManager.initQueue("Luces encendidas");
+                        fire.FireCambioBase("sala","luces","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces encendidas");
                     } else if( comando.equalsIgnoreCase("Apagar luces")){
-                        fire.FireCambioBase("sala","luces","OFF");
-                        ttsManager.initQueue("Luces apagadas");
+                        fire.FireCambioBase("sala","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces apagadas");
                     }else if(comando.equalsIgnoreCase("Encender ventilador")){
-                        fire.FireCambioBase("sala","ventilador","ON");
-                        ttsManager.initQueue("Ventilador encendido");
+                        fire.FireCambioBase("sala","ventilador","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Ventilador encendido"); //Ejecucion de voz del cambio de estado
                         mensaje("Ventilador encendido");
                     } else if( comando.equalsIgnoreCase("Apagar ventilador")){
-                        fire.FireCambioBase("sala","ventilador","OFF");
-                        ttsManager.initQueue("Ventilador apagado");
+                        fire.FireCambioBase("sala","ventilador","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Ventilador apagado"); //Ejecucion de voz del cambio de estado
                         mensaje("Ventilador apagado");
                     }
                 }

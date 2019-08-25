@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Dormitorio extends AppCompatActivity {
-
+    //Inicializacion de variables TextView, Switch, DatabaseRefence, Cambio_base, TTSManager
     TextView txtLuces;
     Switch swtLuces;
     TextView txtPersianas;
@@ -32,18 +32,19 @@ public class Dormitorio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ttsManager=new TTSManager();
+        ttsManager=new TTSManager(); //creacion del objeto que ejecutara la voz de la aplicacion
         ttsManager.init(this);
         setContentView(R.layout.activity_dormitorio);
-        txtLuces = (TextView) findViewById(R.id.textView_Luces2);
+        txtLuces = (TextView) findViewById(R.id.textView_Luces2); //llamado del TextView del activity
         txtPersianas = (TextView) findViewById(R.id.textView_Persianas2);
-        swtPersinas = (Switch) findViewById(R.id.switch_Persianas2);
+        swtPersinas = (Switch) findViewById(R.id.switch_Persianas2); //llamado del switch del activity
         swtLuces = (Switch) findViewById(R.id.switch_Luces2);
-        String cuarto = "dormitorio";
+
+        String cuarto = "dormitorio"; //variables que se utilizara para ejecutar en la base de datos
         final String dispositivo1 = "luces";
         final String dispositivo2 = "persianas";
-        housetic = FirebaseDatabase.getInstance().getReference();
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic = FirebaseDatabase.getInstance().getReference(); //ingreso a la base de datos
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {  //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,7 +67,7 @@ public class Dormitorio extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        housetic.child(cuarto).addValueEventListener(new ValueEventListener() {
+        housetic.child(cuarto).addValueEventListener(new ValueEventListener() { //busqueada por padre e hijo del diapositivo
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,24 +92,24 @@ public class Dormitorio extends AppCompatActivity {
         });
     }
 
-    public void estaciones(View v) {
+    public void estaciones(View v) { //implementacion de funcion estaciones, redirrecionamiento del cuarto a estaciones
         Intent i = new Intent(this, Estaciones.class );
         startActivity(i);
 
     }
 
-    public void onclicPersianas(View view){
+    public void onclicPersianas(View view){ //implementacion de funcion onClic para las persianas
 
         if (view.getId() == R.id.switch_Persianas2){
             if (swtPersinas.isChecked()){
                 txtPersianas.setText("Activado");
-                fire.FireCambioBase("dormitorio","persianas","ON");
-                ttsManager.initQueue("Persianas elevadas");
+                fire.FireCambioBase("dormitorio","persianas","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Persianas elevadas"); //Ejecucion de voz del cambio de estado
                 mensaje("Persianas elevadas");
             }else{
                 txtPersianas.setText("Desactivado");
-                fire.FireCambioBase("dormitorio","persianas","OFF");
-                ttsManager.initQueue("Persianas desplegadas");
+                fire.FireCambioBase("dormitorio","persianas","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Persianas desplegadas"); //Ejecucion de voz del cambio de estado
                 mensaje("Persianas desplegadas");
             }
         }
@@ -119,13 +120,13 @@ public class Dormitorio extends AppCompatActivity {
         if (view.getId() == R.id.switch_Luces2){
             if (swtLuces.isChecked()){
                 txtLuces.setText("Activado");
-                fire.FireCambioBase("dormitorio","luces","ON");
-                ttsManager.initQueue("Luces encendidas");
+                fire.FireCambioBase("dormitorio","luces","ON"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                 mensaje("Luces encendidas");
             }else{
                 txtLuces.setText("Desactivado");
-                fire.FireCambioBase("dormitorio","luces","OFF");
-                ttsManager.initQueue("Luces apagadas");
+                fire.FireCambioBase("dormitorio","luces","OFF"); //implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                 mensaje("Luces apagadas");
             }
         }
@@ -156,20 +157,20 @@ public class Dormitorio extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String comando = result.get(0);
                     if(comando.equalsIgnoreCase("Encender luces")){
-                        fire.FireCambioBase("dormitorio","luces","ON");
-                        ttsManager.initQueue("Luces encendidas");
+                        fire.FireCambioBase("dormitorio","luces","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Luces encendidas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces encendidas");
                     } else if( comando.equalsIgnoreCase("Apagar luces")){
-                        fire.FireCambioBase("dormitorio","luces","OFF");
-                        ttsManager.initQueue("Luces apagadas");
+                        fire.FireCambioBase("dormitorio","luces","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Luces apagadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Luces apagadas");
                     }else if(comando.equalsIgnoreCase("Elevar persianas")){
-                        fire.FireCambioBase("dormitorio","persianas","ON");
-                        ttsManager.initQueue("Persianas elevadas");
+                        fire.FireCambioBase("dormitorio","persianas","ON");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a ON
+                        ttsManager.initQueue("Persianas elevadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Persianas elevadas");
                     } else if( comando.equalsIgnoreCase("Bajar persianas")){
-                        fire.FireCambioBase("dormitorio","persianas","OFF");
-                        ttsManager.initQueue("Persianas desplegadas");
+                        fire.FireCambioBase("dormitorio","persianas","OFF");//implementacion del FireCambioBase, cambiara el estado del disposito en la base de datos a OFF
+                        ttsManager.initQueue("Persianas desplegadas"); //Ejecucion de voz del cambio de estado
                         mensaje("Persianas desplegadas");
                     }
                 }
